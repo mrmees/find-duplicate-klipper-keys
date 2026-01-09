@@ -57,19 +57,44 @@ cd ~/printer_data/config
 2. Add this to your `printer.cfg`:
 ```ini
 [gcode_shell_command find_duplicates]
-command: /home/YOUR_USERNAME/printer_data/config/find_duplicates.sh
+command: ../printer_data/config/find_duplicates.sh
 timeout: 30.
 verbose: True
+
+[gcode_macro FIND_DUPLICATES]
+description: Check for duplicate configuration keys
+gcode:
+    RUN_SHELL_COMMAND CMD=find_duplicates
 ```
 
-3. Replace `YOUR_USERNAME` with your actual username (e.g., `pi`, `matt`, etc.)
+3. Restart Klipper
 
-4. Restart Klipper
+4. Run from your console or macro:
+```
+FIND_DUPLICATES
+```
 
-5. Run from your console:
+Or use the original shell command directly:
 ```
 RUN_SHELL_COMMAND CMD=find_duplicates
 ```
+
+### Adding a Button to Your Interface
+
+After adding the macro above, you can add a button to your interface:
+
+**Mainsail:**
+1. Go to Settings → Interface → Dashboard
+2. Add a macro tile
+3. Select the `FIND_DUPLICATES` macro
+4. The button will appear on your dashboard
+
+**Fluidd:**
+1. The macro will automatically appear in your macros list
+2. You can pin it to the dashboard for quick access
+
+**KlipperScreen:**
+- The macro will appear in the Macros menu
 
 ## Example Output
 
