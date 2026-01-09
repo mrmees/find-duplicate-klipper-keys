@@ -59,11 +59,9 @@ timeout: 10.
 verbose: True
 ```
 
-3. Replace `YOUR_USERNAME` with your actual username (e.g., `pi`, `matt`, etc.)
+3. Restart Klipper
 
-4. Restart Klipper
-
-5. Run from your console:
+4. Run from your console:
 ```
 RUN_SHELL_COMMAND CMD=find_duplicates
 ```
