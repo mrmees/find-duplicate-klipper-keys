@@ -21,7 +21,7 @@ This script scans your Klipper configuration directory and identifies any config
 
 ### Option 1: Manual Installation
 
-1. Download `find_duplicates.sh` to your Klipper config directory:
+1. Download `find_duplicates.sh` to your Klipper config directory or somewhere convenient, I use an EXTRAS directory under the config directory:
 ```bash
 cd ~/printer_data/config
 wget https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/find_duplicates.sh
