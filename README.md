@@ -9,6 +9,9 @@ This script scans your Klipper configuration directory and identifies any config
 ## Features
 
 - 🔍 Recursively searches all `.cfg` files in your config directory
+- 🎯 **Shows which duplicate is ACTIVE** based on Klipper's actual load order
+- 📋 Parses `printer.cfg` and follows `[include]` directives exactly as Klipper does
+- 🔄 Handles nested includes and wildcard patterns correctly
 - 🚫 Automatically excludes:
   - Backup files (containing "backup" in the filename)
   - Dated backup files (YYYY-MM-DD, YYYYMMDD, YYYY_MM_DD formats)
@@ -21,7 +24,7 @@ This script scans your Klipper configuration directory and identifies any config
 
 ### Option 1: Manual Installation
 
-1. Download `find_duplicates.sh` to your Klipper config directory (or somewhere convenient, I use an EXTRAS directory under the config directory, but the instructions below assume it's in your config directory):
+1. Download `find_duplicates.sh` to your Klipper config directory:
 ```bash
 cd ~/printer_data/config
 wget https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/find_duplicates.sh
@@ -51,17 +54,19 @@ cd ~/printer_data/config
 
 1. Install the [gcode_shell_command](https://github.com/dw-0/kiauh/blob/master/docs/gcode_shell_command.md) extension if you haven't already
 
-2. Add this to your `printer.cfg` or any other cfg you choose to use:
+2. Add this to your `printer.cfg`:
 ```ini
 [gcode_shell_command find_duplicates]
-command: ../printer_data/config/find_duplicates.sh
-timeout: 10.
+command: /home/YOUR_USERNAME/printer_data/config/find_duplicates.sh
+timeout: 30.
 verbose: True
 ```
 
-3. Restart Klipper
+3. Replace `YOUR_USERNAME` with your actual username (e.g., `pi`, `matt`, etc.)
 
-4. Run from your console:
+4. Restart Klipper
+
+5. Run from your console:
 ```
 RUN_SHELL_COMMAND CMD=find_duplicates
 ```
@@ -74,26 +79,32 @@ Duplicate configuration keys found:
 
 [stepper_x]
   printer.cfg
-  overrides.cfg
+  overrides.cfg ← ACTIVE
 
 [extruder]
   printer.cfg
-  hotend_config.cfg
+  hotend_config.cfg ← ACTIVE
 
 [bed_mesh]
   printer.cfg
-  calibration/mesh_settings.cfg
+  calibration/mesh_settings.cfg ← ACTIVE
 ```
+
+The `← ACTIVE` indicator shows which file's definition Klipper will actually use, based on the exact load order determined by parsing your `[include]` directives.
 
 ## Understanding the Results
 
 When a configuration key appears in multiple files:
 - **Last definition wins**: Klipper will use the last file loaded (based on include order)
-- **Unexpected behavior**: If you're not aware of duplicates, changes to one file might not have the expected effect
+- **The script follows Klipper's logic**: It parses `printer.cfg` and recursively follows all `[include]` directives in the exact order Klipper processes them
+- **Wildcard includes**: Files matching wildcards (e.g., `[include macros/*.cfg]`) are loaded alphabetically
+- **The ACTIVE marker**: Shows which file contains the definition that Klipper is actually using
+- **Unexpected behavior**: If you're not aware of duplicates, changes to an inactive file won't have any effect
 - **Recommended action**: Review each duplicate and decide whether to:
-  - Remove the duplicate from one file
+  - Remove the duplicate from inactive files
   - Rename one section (if using named variants, e.g., `[extruder1]`)
   - Consolidate settings into a single file
+  - Adjust your `[include]` order if the wrong file is active
 
 ## Files That Are Ignored
 
