@@ -54,8 +54,8 @@ cd ~/printer_data/config
 2. Add this to your `printer.cfg`:
 ```ini
 [gcode_shell_command find_duplicates]
-command: /home/YOUR_USERNAME/printer_data/config/find_duplicates.sh
-timeout: 30.
+command: ../printer_data/config/find_duplicates.sh
+timeout: 10.
 verbose: True
 ```
 
