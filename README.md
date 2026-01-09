@@ -51,7 +51,7 @@ cd ~/printer_data/config
 
 1. Install the [gcode_shell_command](https://github.com/dw-0/kiauh/blob/master/docs/gcode_shell_command.md) extension if you haven't already
 
-2. Add this to your `printer.cfg`:
+2. Add this to your `printer.cfg` or any other cfg you choose to use:
 ```ini
 [gcode_shell_command find_duplicates]
 command: ../printer_data/config/find_duplicates.sh
