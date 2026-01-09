@@ -22,39 +22,33 @@ This script scans your Klipper configuration directory and identifies any config
 
 ## Installation
 
-### Option 1: Manual Installation
+### Option 1: Quick Install (Recommended)
+
+1. Download both `find_duplicates.sh` and `find_duplicates.cfg` to your Klipper config directory:
+```bash
+cd ~/printer_data/config
+wget https://raw.githubusercontent.com/mrmees/find-duplicate-klipper-keys/main/find_duplicates.sh
+wget https://raw.githubusercontent.com/mrmees/find-duplicate-klipper-keys/main/find_duplicates.cfg
+chmod +x find_duplicates.sh
+```
+
+2. Add this line to your `printer.cfg`:
+```ini
+[include find_duplicates.cfg]
+```
+
+3. Restart Klipper
+
+### Option 2: Manual Installation
 
 1. Download `find_duplicates.sh` to your Klipper config directory:
 ```bash
 cd ~/printer_data/config
-wget https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/find_duplicates.sh
+wget https://raw.githubusercontent.com/mrmees/find-duplicate-klipper-keys/main/find_duplicates.sh
 chmod +x find_duplicates.sh
 ```
 
-### Option 2: Direct Creation
-
-```bash
-cd ~/printer_data/config
-nano find_duplicates.sh
-# Paste the script content
-chmod +x find_duplicates.sh
-```
-
-## Usage
-
-### Command Line
-
-Run directly from your SSH session:
-```bash
-cd ~/printer_data/config
-./find_duplicates.sh
-```
-
-### Integration with Klipper (gcode_shell_command)
-
-1. Install the [gcode_shell_command](https://github.com/dw-0/kiauh/blob/master/docs/gcode_shell_command.md) extension if you haven't already
-
-2. Add this to your `printer.cfg`:
+2. Manually add the configuration to your `printer.cfg`:
 ```ini
 [gcode_shell_command find_duplicates]
 command: ../printer_data/config/find_duplicates.sh
@@ -69,12 +63,35 @@ gcode:
 
 3. Restart Klipper
 
-4. Run from your console or macro:
+### Option 3: Direct Creation
+
+```bash
+cd ~/printer_data/config
+nano find_duplicates.sh
+# Paste the script content
+chmod +x find_duplicates.sh
+```
+
+Then follow Option 1 or 2 above for the Klipper configuration.
+
+## Usage
+
+### Command Line
+
+Run directly from your SSH session:
+```bash
+cd ~/printer_data/config
+./find_duplicates.sh
+```
+
+### From Klipper Console or Macro
+
+If you installed using Option 1 or 2 above, simply run:
 ```
 FIND_DUPLICATES
 ```
 
-Or use the original shell command directly:
+Or use the shell command directly:
 ```
 RUN_SHELL_COMMAND CMD=find_duplicates
 ```
@@ -141,6 +158,7 @@ The script automatically skips:
 ## Requirements
 
 - Klipper installation with standard directory structure
+- [gcode_shell_command](https://github.com/dw-0/kiauh/blob/master/docs/gcode_shell_command.md) extension (for Klipper integration)
 - Bash shell
 - Standard Unix utilities: `find`, `grep`, `sed`, `awk`
 
